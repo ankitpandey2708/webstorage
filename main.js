@@ -259,13 +259,13 @@ async function getCache() {
             document.getElementById('cache-result').innerText = 'No items found.';
             return;
         }
-        let result = 'All Cache:\n';
+        let result = 'All Cache:<br>';
         for (const req of requests) {
             const response = await cache.match(req);
             const text = await response.text();
-            result += `${req.url}: ${text}\n`;
+            result += `<a href="${req.url}" target="_blank">${req.url}</a>: ${text}<br>`;
         }
-        document.getElementById('cache-result').innerText = result;
+        document.getElementById('cache-result').innerHTML = result;
     } else {
         const response = await cache.match(k);
         if (response) {
