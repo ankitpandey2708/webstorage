@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Web Storage Demo</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <h1>Web Storage Demo</h1>
+    <div class="storage-section" id="cookies-section">
+        <h2>Cookies</h2>
+        <div class="input-row">
+            <input type="text" id="cookie-key" placeholder="Key">
+            <input type="text" id="cookie-value" placeholder="Value">
+            <button onclick="setCookie()">Set</button>
+        </div>
+        <div class="button-row">
+            <button onclick="getCookie()">Fetch</button>
+            <button onclick="deleteCookie()">Delete</button>
+            <button onclick="checkCookieSize()">Check Size</button>
+        </div>
+        <div id="cookie-result"></div>
+    </div>
+    <div class="storage-section" id="localstorage-section">
+        <h2>Local Storage</h2>
+        <div class="input-row">
+            <input type="text" id="local-key" placeholder="Key">
+            <input type="text" id="local-value" placeholder="Value">
+            <button onclick="setLocalStorage()">Set</button>
+        </div>
+        <div class="button-row">
+            <button onclick="getLocalStorage()">Fetch</button>
+            <button onclick="deleteLocalStorage()">Delete</button>
+            <button onclick="checkLocalStorageSize()">Check Size</button>
+        </div>
+        <div id="local-result"></div>
+    </div>
+    <div class="storage-section" id="sessionstorage-section">
+        <h2>Session Storage</h2>
+        <div class="input-row">
+            <input type="text" id="session-key" placeholder="Key">
+            <input type="text" id="session-value" placeholder="Value">
+            <button onclick="setSessionStorage()">Set</button>
+        </div>
+        <div class="button-row">
+            <button onclick="getSessionStorage()">Fetch</button>
+            <button onclick="deleteSessionStorage()">Delete</button>
+            <button onclick="checkSessionStorageSize()">Check Size</button>
+        </div>
+        <div id="session-result"></div>
+    </div>
+    <div class="storage-section" id="indexeddb-section">
+        <h2>IndexedDB</h2>
+        <div class="input-row">
+            <input type="text" id="idb-key" placeholder="Key">
+            <input type="text" id="idb-value" placeholder="Value">
+            <button onclick="setIndexedDB()">Set</button>
+        </div>
+        <div class="button-row">
+            <button onclick="getIndexedDB()">Fetch</button>
+            <button onclick="deleteIndexedDB()">Delete</button>
+            <button onclick="checkIndexedDBSize()">Check Size</button>
+        </div>
+        <div id="idb-result"></div>
+    </div>
+    <div class="storage-section" id="cache-section">
+        <h2>Cache (Service Worker)</h2>
+        <div class="input-row">
+            <input type="text" id="cache-key" placeholder="Request URL">
+            <input type="text" id="cache-value" placeholder="Response Value">
+            <button onclick="setCache()">Set</button>
+        </div>
+        <div class="button-row">
+            <button onclick="getCache()">Fetch</button>
+            <button onclick="deleteCache()">Delete</button>
+            <button onclick="checkCacheSize()">Check Size</button>
+        </div>
+        <div id="cache-result"></div>
+    </div>
+    <script src="main.js"></script>
+</body>
+</html>
