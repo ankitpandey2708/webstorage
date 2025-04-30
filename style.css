@@ -1,91 +1,213 @@
-body {
-    font-family: Arial, sans-serif;
-    background: #f5f7fa;
+/* Global Reset and Base Styles */
+* {
+    box-sizing: border-box;
     margin: 0;
     padding: 0;
 }
 
-.input-row, .button-row {
-    width: 100%;
-    justify-content: center;
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    margin-bottom: 8px;
+:root {
+    --color-background: #ffffff;
+    --color-text: #000000;
+    --color-text-secondary: #333333;
+    --color-border: #e0e0e0;
+    --color-input-bg: #f7f7f7;
+    --color-button: #000000;
+    --color-button-hover: #333333;
+    --color-result-bg: #f7f7f7;
+    --spacing-xs: 4px;
+    --spacing-sm: 8px;
+    --spacing-md: 16px;
+    --spacing-lg: 24px;
+    --spacing-xl: 32px;
+    --spacing-xxl: 48px;
+    --border-radius: 4px;
+    --shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+    --max-width: 1200px;
 }
-.button-row {
-    margin-bottom: 8px;
+
+body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', sans-serif;
+    background: var(--color-background);
+    color: var(--color-text);
+    line-height: 1.5;
+    margin: 0;
+    padding: var(--spacing-lg);
 }
-.button-row button {
-    margin-right: 5px;
-}
+
+/* Typography */
 h1 {
+    font-size: 2.5rem;
+    font-weight: 700;
+    letter-spacing: -0.5px;
     text-align: center;
-    margin-top: 30px;
+    margin: var(--spacing-xl) 0 var(--spacing-lg);
 }
+
+h2 {
+    font-size: 1.5rem;
+    font-weight: 600;
+    letter-spacing: -0.25px;
+    margin-bottom: var(--spacing-md);
+    width: 100%;
+}
+
+/* Layout & Grid */
+.container {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: var(--spacing-lg);
+    max-width: var(--max-width);
+    margin: 0 auto;
+    padding: 0 var(--spacing-md);
+}
+
+@media (min-width: 768px) {
+    .container {
+        grid-template-columns: repeat(2, 1fr);
+    }
+    
+    /* Target the last section when it's the 5th child */
+    .storage-section:nth-child(5) {
+        grid-column: 1 / -1;
+        max-width: 500px;
+        justify-self: center;
+    }
+    
+    /* Ensure consistent styling for centered element */
+    .storage-section:nth-child(5) {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+    
+    .storage-section:nth-child(5) .storage-form {
+        width: 100%;
+    }
+}
+
+/* Storage Section Components */
 .storage-section {
-    background: #fff;
-    margin: 30px auto;
-    padding: 18px 18px 18px 18px;
-    border-radius: 12px;
-    max-width: 420px;
-    min-width: 320px;
-    box-shadow: 0 2px 12px rgba(0,0,0,0.10);
+    background: var(--color-background);
+    padding: var(--spacing-lg);
+    border-radius: var(--border-radius);
+    border: 1px solid var(--color-border);
+    box-shadow: var(--shadow);
     display: flex;
     flex-direction: column;
+    width: 100%;
+}
+
+.storage-form {
+    width: 100%;
+}
+
+/* Form Controls */
+.input-row, 
+.button-row {
+    display: flex;
+    gap: var(--spacing-sm);
+    margin-bottom: var(--spacing-md);
+    width: 100%;
+}
+
+.input-row {
+    flex-direction: column;
+    align-items: stretch;
+}
+
+.button-row {
+    display: flex;
     align-items: center;
-    justify-content: flex-start;
+    flex-wrap: wrap;
 }
-.storage-section h2 {
-    margin-top: 0;
-    margin-bottom: 12px;
-    font-size: 1.25em;
-    text-align: center;
-    width: 100%;
-}
-#cookie-result, #local-result, #session-result, #idb-result, #cache-result {
-    margin-top: 10px;
-    min-height: 24px;
-    color: #333;
-    font-size: 0.98em;
-    width: 100%;
-    word-break: break-word;
-    text-align: left;
-    background: #f8fafd;
-    border-radius: 4px;
-    padding: 6px 8px;
-    box-sizing: border-box;
-}
-@media (min-width: 600px) {
-    .storage-section {
-        max-width: 440px;
+
+@media (min-width: 480px) {
+    .input-row {
+        flex-direction: row;
+        align-items: center;
     }
-    .input-row, .button-row {
-        max-width: 380px;
-        margin-left: auto;
-        margin-right: auto;
+    
+    .button-row button {
+        flex: 0 0 auto;
     }
 }
+
 input[type="text"] {
-    margin: 5px 5px 10px 0;
-    padding: 6px;
-    border: 1px solid #ccc;
-    border-radius: 4px;
+    padding: var(--spacing-sm) var(--spacing-md);
+    border: 1px solid var(--color-border);
+    border-radius: var(--border-radius);
+    background: var(--color-input-bg);
+    font-size: 1rem;
+    flex: 1;
+    min-width: 0; /* Prevents flex items from overflowing */
+    height: 40px;
 }
+
 button {
-    margin-right: 5px;
-    padding: 6px 12px;
+    padding: var(--spacing-sm) var(--spacing-md);
+    background: var(--color-button);
+    color: white;
     border: none;
-    background: #0078d7;
-    color: #fff;
-    border-radius: 4px;
+    border-radius: var(--border-radius);
     cursor: pointer;
-    transition: background 0.2s;
-    height: 32px; /* match typical input height */
-    line-height: 20px;
-    box-sizing: border-box;
-    vertical-align: middle;
+    font-size: 0.9rem;
+    font-weight: 500;
+    height: 40px;
+    transition: background 0.2s ease, transform 0.1s ease;
+    min-width: 80px;
 }
+
 button:hover {
-    background: #005fa3;
+    background: var(--color-button-hover);
+}
+
+button:active {
+    transform: translateY(1px);
+}
+
+/* Results Display */
+#cookie-result, 
+#local-result, 
+#session-result, 
+#idb-result, 
+#cache-result {
+    background: var(--color-result-bg);
+    border-radius: var(--border-radius);
+    padding: var(--spacing-md);
+    margin-top: var(--spacing-md);
+    min-height: 60px;
+    font-size: 0.9rem;
+    word-break: break-word;
+    border: 1px solid var(--color-border);
+    width: 100%;
+}
+
+/* GitHub Corner */
+.github-corner svg {
+    fill: var(--color-text);
+    color: var(--color-background);
+    position: absolute;
+    top: 0;
+    right: 0;
+    border: 0;
+    z-index: 100;
+}
+
+.github-corner:hover .octo-arm {
+    animation: octocat-wave 560ms ease-in-out;
+}
+
+@keyframes octocat-wave {
+    0%, 100% { transform: rotate(0); }
+    20%, 60% { transform: rotate(-25deg); }
+    40%, 80% { transform: rotate(10deg); }
+}
+
+@media (max-width: 500px) {
+    .github-corner:hover .octo-arm {
+        animation: none;
+    }
+    .github-corner .octo-arm {
+        animation: octocat-wave 560ms ease-in-out;
+    }
 }
