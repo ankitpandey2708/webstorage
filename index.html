@@ -1,0 +1,462 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Learn different web storage types - cookies, localStorage, sessionStorage, IndexedDB, and Cache API with interactive examples">
+    <title>Web Storage Guide - Learn Browser Storage Types</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <header role="banner">
+        <h1>Web Storage Guide</h1>
+        <p class="hero-description">Learn when and how to use different browser storage mechanisms</p>
+    </header>
+
+    <section class="comparison-overview" aria-labelledby="comparison-title">
+        <h2 id="comparison-title">Storage Type Comparison</h2>
+        <div class="comparison-grid">
+            <div class="comparison-header">
+                <div class="comparison-cell">Storage Type</div>
+                <div class="comparison-cell">Purpose</div>
+                <div class="comparison-cell">Size Limit</div>
+                <div class="comparison-cell">Persistence</div>
+                <div class="comparison-cell">Scope</div>
+                <div class="comparison-cell">Use Cases</div>
+            </div>
+
+            <div class="comparison-row" data-storage-type="cookies">
+                <div class="comparison-cell storage-name">
+                    <strong>Cookies</strong>
+                    <span class="storage-category">HTTP</span>
+                </div>
+                <div class="comparison-cell">Store small amounts of data sent to server with each HTTP request</div>
+                <div class="comparison-cell">~4KB per cookie</div>
+                <div class="comparison-cell">Configurable (minutes to years)</div>
+                <div class="comparison-cell">Domain + path</div>
+                <div class="comparison-cell">User authentication, tracking, preferences</div>
+            </div>
+
+            <div class="comparison-row" data-storage-type="localstorage">
+                <div class="comparison-cell storage-name">
+                    <strong>Local Storage</strong>
+                    <span class="storage-category">Client-side</span>
+                </div>
+                <div class="comparison-cell">Persistent key-value storage for client-side data</div>
+                <div class="comparison-cell">~5-10MB</div>
+                <div class="comparison-cell">Permanent (until cleared)</div>
+                <div class="comparison-cell">Origin (protocol + domain + port)</div>
+                <div class="comparison-cell">User settings, cached data, offline content</div>
+            </div>
+
+            <div class="comparison-row" data-storage-type="sessionstorage">
+                <div class="comparison-cell storage-name">
+                    <strong>Session Storage</strong>
+                    <span class="storage-category">Client-side</span>
+                </div>
+                <div class="comparison-cell">Temporary key-value storage for session data</div>
+                <div class="comparison-cell">~5-10MB</div>
+                <div class="comparison-cell">Until tab/window closes</div>
+                <div class="comparison-cell">Origin + tab/window</div>
+                <div class="comparison-cell">Form data, temporary UI state, shopping cart</div>
+            </div>
+
+            <div class="comparison-row" data-storage-type="indexeddb">
+                <div class="comparison-cell storage-name">
+                    <strong>IndexedDB</strong>
+                    <span class="storage-category">Database</span>
+                </div>
+                <div class="comparison-cell">Structured data storage with querying capabilities</div>
+                <div class="comparison-cell">~50MB+ (can request more)</div>
+                <div class="comparison-cell">Permanent (until cleared)</div>
+                <div class="comparison-cell">Origin</div>
+                <div class="comparison-cell">Complex data, file storage, offline apps</div>
+            </div>
+
+            <div class="comparison-row" data-storage-type="cache">
+                <div class="comparison-cell storage-name">
+                    <strong>Cache API</strong>
+                    <span class="storage-category">Service Worker</span>
+                </div>
+                <div class="comparison-cell">Programmatic HTTP request/response caching</div>
+                <div class="comparison-cell">Browser-managed</div>
+                <div class="comparison-cell">Until cleared or evicted</div>
+                <div class="comparison-cell">Origin + Cache instance</div>
+                <div class="comparison-cell">Offline web apps, performance optimization</div>
+            </div>
+        </div>
+    </section>
+
+    <main class="container" role="main">
+        <section class="storage-section" id="cookies-section">
+            <h2>Cookies</h2>
+
+            <div class="educational-content">
+                <div class="content-description">
+                    <p><strong>What:</strong> Small text files sent by websites and stored on your computer. Cookies are mainly used for authentication, tracking, and remembering user preferences.</p>
+                    <p><strong>When to use:</strong> Authentication sessions, user preferences, tracking user behavior, shopping cart contents (without login), personalization.</p>
+                </div>
+
+                <div class="key-characteristics">
+                    <div class="characteristic">
+                        <strong>Size Limit:</strong> ~4KB per cookie
+                    </div>
+                    <div class="characteristic">
+                        <strong>Persistence:</strong> Configurable (minutes to years)
+                    </div>
+                    <div class="characteristic">
+                        <strong>Scope:</strong> Domain + path specific
+                    </div>
+                    <div class="characteristic">
+                        <strong>Security:</strong> Sent with every HTTP request
+                    </div>
+                </div>
+
+                <div class="use-case-examples">
+                    <strong>Real Examples:</strong>
+                    <ul>
+                        <li>"Remember me" login functionality</li>
+                        <li>E-commerce shopping cart without account</li>
+                        <li>Website language preferences</li>
+                        <li>Analytics and tracking (Google Analytics, etc.)</li>
+                    </ul>
+                </div>
+
+                <div class="best-practices">
+                    <strong>Best Practices:</strong>
+                    <ul>
+                        <li>Use secure cookies for sensitive data (HTTPS only)</li>
+                        <li>Set appropriate expiration times</li>
+                        <li>Consider privacy laws (GDPR, CCPA compliance)</li>
+                        <li>Don't store sensitive data in cookies</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="demo-section">
+                <h3>Try It Out - Cookie Storage</h3>
+            <form class="storage-form" onsubmit="event.preventDefault();">
+                <div class="input-group">
+                    <div class="input-wrapper">
+                        <label for="cookie-key">Key</label>
+                        <input type="text" id="cookie-key" placeholder="Enter cookie name" aria-label="Cookie key">
+                    </div>
+                    <div class="input-wrapper">
+                        <label for="cookie-value">Value</label>
+                        <input type="text" id="cookie-value" placeholder="Enter cookie value" aria-label="Cookie value">
+                    </div>
+                </div>
+                <div class="button-row">
+                    <button type="button" class="btn-primary" onclick="setCookie()">Set</button>
+                    <button type="button" class="btn-danger" onclick="deleteCookie()">Delete</button>
+                    <button type="button" class="btn-secondary" onclick="checkCookieSize()">Check Size</button>
+                </div>
+            </form>
+            <div id="cookie-result" aria-live="polite" role="status" class="result-display"></div>
+        </section>
+
+        <section class="storage-section" id="localstorage-section">
+            <h2>Local Storage</h2>
+
+            <div class="educational-content">
+                <div class="content-description">
+                    <p><strong>What:</strong> Permanent key-value storage that persists even after the browser is closed. Data is stored as strings and is accessible to all pages from the same origin.</p>
+                    <p><strong>When to use:</strong> User preferences, cached application data, offline content, remembering user choices across sessions.</p>
+                </div>
+
+                <div class="key-characteristics">
+                    <div class="characteristic">
+                        <strong>Size Limit:</strong> ~5-10MB per origin
+                    </div>
+                    <div class="characteristic">
+                        <strong>Persistence:</strong> Until manually cleared
+                    </div>
+                    <div class="characteristic">
+                        <strong>Scope:</strong> Origin (protocol, domain, port)
+                    </div>
+                    <div class="characteristic">
+                        <strong>Security:</strong> Same-origin policy, not sent to server
+                    </div>
+                </div>
+
+                <div class="use-case-examples">
+                    <strong>Real Examples:</strong>
+                    <ul>
+                        <li>User theme preferences (dark/light mode)</li>
+                        <li>Application settings and configuration</li>
+                        <li>Cached API responses for offline use</li>
+                        <li>Shopping cart contents (for registered users)</li>
+                        <li>Form auto-save functionality</li>
+                    </ul>
+                </div>
+
+                <div class="best-practices">
+                    <strong>Best Practices:</strong>
+                    <ul>
+                        <li>Always use try/catch blocks (storage might be full)</li>
+                        <li>Only store simple data types that serialize well</li>
+                        <li>Consider privacy implications for user data</li>
+                        <li>Use meaningful key names with prefixes</li>
+                        <li>Clear sensitive data when appropriate</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="demo-section">
+                <h3>Try It Out - Local Storage</h3>
+            <form class="storage-form" onsubmit="event.preventDefault();">
+                <div class="input-group">
+                    <div class="input-wrapper">
+                        <label for="local-key">Key</label>
+                        <input type="text" id="local-key" placeholder="Enter storage key" aria-label="Local storage key">
+                    </div>
+                    <div class="input-wrapper">
+                        <label for="local-value">Value</label>
+                        <input type="text" id="local-value" placeholder="Enter value to store" aria-label="Local storage value">
+                    </div>
+                </div>
+                <div class="button-row">
+                    <button type="button" class="btn-primary" onclick="setLocalStorage()">Set</button>
+                    <button type="button" class="btn-danger" onclick="deleteLocalStorage()">Delete</button>
+                    <button type="button" class="btn-secondary" onclick="checkLocalStorageSize()">Check Size</button>
+                </div>
+            </form>
+            <div id="local-result" aria-live="polite" role="status" class="result-display"></div>
+        </section>
+
+        <section class="storage-section" id="sessionstorage-section">
+            <h2>Session Storage</h2>
+
+            <div class="educational-content">
+                <div class="content-description">
+                    <p><strong>What:</strong> Temporary key-value storage that only lasts for the duration of the browser tab/window. When the tab is closed, the data disappears.</p>
+                    <p><strong>When to use:</strong> Temporary form data, navigation state, one-time use tokens, wizard steps, temporary user interface preferences.</p>
+                </div>
+
+                <div class="key-characteristics">
+                    <div class="characteristic">
+                        <strong>Size Limit:</strong> ~5-10MB per origin
+                    </div>
+                    <div class="characteristic">
+                        <strong>Persistence:</strong> Until tab/window closes
+                    </div>
+                    <div class="characteristic">
+                        <strong>Scope:</strong> Origin + tab/window
+                    </div>
+                    <div class="characteristic">
+                        <strong>Security:</strong> Same-origin policy, not sent to server
+                    </div>
+                </div>
+
+                <div class="use-case-examples">
+                    <strong>Real Examples:</strong>
+                    <ul>
+                        <li>Unsaved form data (multi-step forms)</li>
+                        <li>Shopping cart for guest users</li>
+                        <li>UI state (expanded panels, sort orders)</li>
+                        <li>Temporary navigation history</li>
+                        <li>One-time authentication tokens</li>
+                    </ul>
+                </div>
+
+                <div class="best-practices">
+                    <strong>Best Practices:</strong>
+                    <ul>
+                        <li>Use for truly temporary data only</li>
+                        <li>Always use try/catch blocks</li>
+                        <li>Consider users opening links in new tabs</li>
+                        <li>Don't rely on sessionStorage for important data</li>
+                        <li>Use descriptive key names</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="demo-section">
+                <h3>Try It Out - Session Storage</h3>
+            <form class="storage-form" onsubmit="event.preventDefault();">
+                <div class="input-group">
+                    <div class="input-wrapper">
+                        <label for="session-key">Key</label>
+                        <input type="text" id="session-key" placeholder="Enter storage key" aria-label="Session storage key">
+                    </div>
+                    <div class="input-wrapper">
+                        <label for="session-value">Value</label>
+                        <input type="text" id="session-value" placeholder="Enter value to store" aria-label="Session storage value">
+                    </div>
+                </div>
+                <div class="button-row">
+                    <button type="button" class="btn-primary" onclick="setSessionStorage()">Set</button>
+                    <button type="button" class="btn-danger" onclick="deleteSessionStorage()">Delete</button>
+                    <button type="button" class="btn-secondary" onclick="checkSessionStorageSize()">Check Size</button>
+                </div>
+            </form>
+            <div id="session-result" aria-live="polite" role="status" class="result-display"></div>
+        </section>
+
+        <section class="storage-section" id="indexeddb-section">
+            <h2>IndexedDB</h2>
+
+            <div class="educational-content">
+                <div class="content-description">
+                    <p><strong>What:</strong> A powerful client-side database that stores data as objects with support for indexes, transactions, and complex queries. It's asynchronous and can store any JavaScript data type.</p>
+                    <p><strong>When to use:</strong> Complex data structures, offline applications, large datasets, structured data that needs querying, file storage, transactional operations.</p>
+                </div>
+
+                <div class="key-characteristics">
+                    <div class="characteristic">
+                        <strong>Size Limit:</strong> ~50MB+ (can request more)
+                    </div>
+                    <div class="characteristic">
+                        <strong>Persistence:</strong> Permanent (until cleared)
+                    </div>
+                    <div class="characteristic">
+                        <strong>Scope:</strong> Origin
+                    </div>
+                    <div class="characteristic">
+                        <strong>Security:</strong> Same-origin policy, transactional
+                    </div>
+                </div>
+
+                <div class="use-case-examples">
+                    <strong>Real Examples:</strong>
+                    <ul>
+                        <li>Offline web applications (Google Docs offline)</li>
+                        <li>Caching large datasets locally</li>
+                        <li>E-commerce product catalogs</li>
+                        <li>Gaming save data and statistics</li>
+                        <li>Email clients storing message data</li>
+                    </ul>
+                </div>
+
+                <div class="best-practices">
+                    <strong>Best Practices:</strong>
+                    <ul>
+                        <li>Use transactions for data integrity</li>
+                        <li>Version your database schema properly</li>
+                        <li>Handle database opening errors gracefully</li>
+                        <li>Use indexes for frequently queried fields</li>
+                        <li>Consider performance for large datasets</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="demo-section">
+                <h3>Try It Out - IndexedDB</h3>
+            <form class="storage-form" onsubmit="event.preventDefault();">
+                <div class="input-group">
+                    <div class="input-wrapper">
+                        <label for="idb-key">Key</label>
+                        <input type="text" id="idb-key" placeholder="Enter database key" aria-label="IndexedDB key">
+                    </div>
+                    <div class="input-wrapper">
+                        <label for="idb-value">Value</label>
+                        <input type="text" id="idb-value" placeholder="Enter value to store" aria-label="IndexedDB value">
+                    </div>
+                </div>
+                <div class="button-row">
+                    <button type="button" class="btn-primary" onclick="setIndexedDB()">Set</button>
+                    <button type="button" class="btn-danger" onclick="deleteIndexedDB()">Delete</button>
+                    <button type="button" class="btn-secondary" onclick="checkIndexedDBSize()">Check Size</button>
+                </div>
+            </form>
+            <div id="idb-result" aria-live="polite" role="status" class="result-display"></div>
+        </section>
+
+        <section class="storage-section" id="cache-section">
+            <h2>Cache (Service Worker)</h2>
+
+            <div class="educational-content">
+                <div class="content-description">
+                    <p><strong>What:</strong> Programmatic control over the browser's HTTP cache, primarily used with Service Workers to enable offline functionality and performance optimization through custom caching strategies.</p>
+                    <p><strong>When to use:</strong> Progressive Web Apps (PWAs), offline-first applications, performance optimization, custom caching strategies, intercepting network requests.</p>
+                </div>
+
+                <div class="key-characteristics">
+                    <div class="characteristic">
+                        <strong>Size Limit:</strong> Browser-managed (varies significantly)
+                    </div>
+                    <div class="characteristic">
+                        <strong>Persistence:</strong> Until cleared or evicted
+                    </div>
+                    <div class="characteristic">
+                        <strong>Scope:</strong> Origin + Cache instance
+                    </div>
+                    <div class="characteristic">
+                        <strong>Security:</strong> HTTPS required, Service Worker context
+                    </div>
+                </div>
+
+                <div class="use-case-examples">
+                    <strong>Real Examples:</strong>
+                    <ul>
+                        <li>PWA offline functionality (Twitter, Slack)</li>
+                        <li>Stale-while-revalidate caching strategies</li>
+                        <li>Preloading critical resources</li>
+                        <li>Background sync for offline actions</li>
+                        <li>Custom network request handling</li>
+                    </ul>
+                </div>
+
+                <div class="best-practices">
+                    <strong>Best Practices:</strong>
+                    <ul>
+                        <li>Requires HTTPS in production</li>
+                        <li>Handle Service Worker updates carefully</li>
+                        <li>Use appropriate cache naming/versioning</li>
+                        <li>Implement proper cache invalidation strategies</li>
+                        <li>Consider storage quota limits</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="demo-section">
+                <h3>Try It Out - Cache API</h3>
+            <form class="storage-form" onsubmit="event.preventDefault();">
+                <div class="input-group">
+                    <div class="input-wrapper">
+                        <label for="cache-key">Key</label>
+                        <input type="text" id="cache-key" placeholder="Enter cache key/URL" aria-label="Cache key">
+                    </div>
+                    <div class="input-wrapper">
+                        <label for="cache-value">Value</label>
+                        <input type="text" id="cache-value" placeholder="Enter content to cache" aria-label="Cache value">
+                    </div>
+                </div>
+                <div class="button-row">
+                    <button type="button" class="btn-primary" onclick="setCache()">Set</button>
+                    <button type="button" class="btn-danger" onclick="deleteCache()">Delete</button>
+                    <button type="button" class="btn-secondary" onclick="checkCacheSize()">Check Size</button>
+                </div>
+            </form>
+            <div id="cache-result" aria-live="polite" role="status" class="result-display"></div>
+        </section>
+    </main>
+
+    <section class="decision-tree-section" aria-labelledby="decision-title">
+        <h2 id="decision-title">Storage Decision Guide</h2>
+        <div class="decision-tree">
+            <div class="decision-node">
+                <h3>What type of data are you storing?</h3>
+                <div class="decision-options">
+                    <button class="decision-btn" onclick="showStorageChoice('user-auth')">User authentication & session data</button>
+                    <button class="decision-btn" onclick="showStorageChoice('user-preferences')">User preferences & settings</button>
+                    <button class="decision-btn" onclick="showStorageChoice('form-data')">Unsaved form data & temporary state</button>
+                    <button class="decision-btn" onclick="showStorageChoice('complex-data')">Complex data structures or files</button>
+                    <button class="decision-btn" onclick="showStorageChoice('offline-content')">Offline web app content</button>
+                    <button class="decision-btn" onclick="showStorageChoice('tracking')">Analytics & tracking data</button>
+                </div>
+            </div>
+
+            <div id="decision-result" class="decision-result" style="display: none;">
+                <div class="recommended-storage">
+                    <h4>We recommend:</h4>
+                    <div id="recommended-type" class="recommended-type"></div>
+                    <div id="decision-explanation" class="decision-explanation"></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <script src="main.js"></script>
+</body>
+</html>
